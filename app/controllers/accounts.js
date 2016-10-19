@@ -14,7 +14,7 @@ exports.main = {
 exports.signup = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('signup', { title: 'Sign up for Donations' });
+    reply.view('signup', { title: 'Sign up for MyTweet' });
   },
 
 };
@@ -54,7 +54,7 @@ exports.register = {
 exports.login = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('login', { title: 'Login to Donations' });
+    reply.view('login', { title: 'Login to MyTweet' });
   },
 
 };

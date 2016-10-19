@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const tweetSchema = mongoose.Schema({
-  donor: {
+  sender: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
