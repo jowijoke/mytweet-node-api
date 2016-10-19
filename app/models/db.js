@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 let dbURI =  'mongodb://localhost/donation';
 
-// 'mongodb://donationuser:donationuser@ds047940.mlab.com:47940/donation';
+// 'mongodb://tweetuser:tweetuser@ds047940.mlab.com:47940/tweet';
 
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGOLAB_URI;
@@ -18,9 +18,8 @@ mongoose.connection.on('connected', function () {
   if (process.env.NODE_ENV != 'production') {
     var seeder = require('mongoose-seeder');
     const data = require('./data.json');
-    const Donation = require('./donation');
+    const Tweet = require('./twet');
     const User = require('./user');
-    const Candidate = require('./candidate.js');
     seeder.seed(data, { dropDatabase: false, dropCollections: true }).then(dbData => {
       console.log('preloading Test Data');
       console.log(dbData);
@@ -37,5 +36,4 @@ mongoose.connection.on('error', function (err) {
 mongoose.connection.on('disconnected', function () {
   console.log('Mongoose disconnected');
 });
-
 
