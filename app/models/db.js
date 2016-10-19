@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-let dbURI =  'mongodb://localhost/donation';
+let dbURI =  'mongodb://localhost/mytweet';
 
 // 'mongodb://tweetuser:tweetuser@ds047940.mlab.com:47940/tweet';
 
@@ -18,7 +18,7 @@ mongoose.connection.on('connected', function () {
   if (process.env.NODE_ENV != 'production') {
     var seeder = require('mongoose-seeder');
     const data = require('./data.json');
-    const Tweet = require('./twet');
+    const Tweet = require('./tweet');
     const User = require('./user');
     seeder.seed(data, { dropDatabase: false, dropCollections: true }).then(dbData => {
       console.log('preloading Test Data');

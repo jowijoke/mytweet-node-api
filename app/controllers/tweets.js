@@ -7,7 +7,7 @@ exports.home = {
   handler: (request, reply) => {
     Candidate.find({}).then(candidates => {
       reply.view('home', {
-        title: 'Make a Donation',
+        title: 'Make a Tweet',
         candidates: candidates,
       });
     }).catch(err => {
