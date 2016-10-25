@@ -1,8 +1,5 @@
 <section class="ui raised segment">
     <div class="ui grid">
-        <aside class="six wide column">
-            <img src="images/homer5.jpg" class="ui medium image">
-        </aside>
         <article class="eight wide column">
             <table class="ui celled table segment">
                 <thead>
@@ -13,9 +10,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{#each donations}}
+                {{#each tweets}}
                     <tr>
-                        <td> {{tweet.msg}} </td>
+                        <td> {{message}}</td>
                         <td> {{sender.firstName}} {{sender.lastName}}</td>
                     </tr>
                 {{/each}}

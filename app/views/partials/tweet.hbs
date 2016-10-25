@@ -1,23 +1,15 @@
 <section class="ui raised segment">
-    <div class="ui grid ">
-        <div class="ui form six wide column">
-            <div class="ui stacked segment">
-                <form action="/tweet" method="POST">
-                        <input type="hidden" name="amount">
-                        <div class="text">Enter Tweet</div>
-                        <div class="grouped inline fields">
-                            <h3> Enter Tweet </h3>
-                            <div class="field">
-                                <label>Tweet</label> <input type="text" name="message">
-                            </div>
-                        </div>
-                    <button class="ui blue submit button">Send Tweet</button>
-                </form>
-                {{> formerror }}
-            </div>
+    <div class="ui two column grid">
+        <div class="column">
+            <form action="/tweet" method=POST>
+                <div class="ui fluid form segment">
+                    <div class="field">
+                        <textarea placeholder="What's on your mind" name="message"></textarea>
+                    </div>
+                    <button class="ui green submit button">Send</button>
+                </div>
+            </form>
         </div>
-        <aside class="six wide column">
-            <img src="images/homer4.jpeg" class="ui medium image">
-        </aside>
     </div>
 </section>
+

@@ -11,11 +11,26 @@ exports.home = {
   },
 };
 
-exports.report = {
+exports.sendTweet = {
+
+  handler: function (request, reply) {
+    Tweet.find({}).populate('sender').then(userTweets => {
+      reply.view('home', {
+        title: 'Tweets to Date',
+        tweets: userTweets,
+      });
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+
+};
+
+exports.leaderBoard = {
 
   handler: function (request, reply) {
     Tweet.find({}).populate('sender').then(allTweets => {
-      reply.view('report', {
+      reply.view('leaderboard', {
         title: 'Tweets to Date',
         tweets: allTweets,
       });
@@ -37,10 +52,9 @@ exports.tweet = {
       userId = user._id;
       tweet = new Tweet(data);
       tweet.sender = userId;
-      tweet.candidate = candidate._id;
       return tweet.save();
     }).then(newTweet => {
-      reply.redirect('/report');
+      reply.redirect('/send_tweet');
     }).catch(err => {
       reply.redirect('/');
     });
