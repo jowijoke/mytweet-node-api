@@ -5,16 +5,21 @@
                 <thead>
                 <tr>
                     <th>Tweet</th>
+                    <th>Date</th>
                 </tr>
                 </thead>
                 <tbody>
                 {{#each tweets}}
                     <tr>
                         <td> {{message}}</td>
+                        <td> {{date}}</td>
                     </tr>
                 {{/each}}
                 </tbody>
             </table>
+            <form action="/deleteAll" method="POST">
+            <button class="ui blue button">Delete</button>
+                </form>
         </article>
     </div>
 </section>

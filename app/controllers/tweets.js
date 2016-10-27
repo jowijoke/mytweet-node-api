@@ -56,22 +56,29 @@ exports.tweet = {
 
   handler: function (request, reply) {
     var userEmail = request.auth.credentials.loggedInUser;
-    let userId = null;
-    let tweet = null;
     User.findOne({ email: userEmail }).then(user => {
       let data = request.payload;
-      userId = user._id;
-      tweet = new Tweet(data);
-      tweet.sender = userId;
+      const tweet = new Tweet(data);
+      tweet.sender = user._id;
+      tweet.date = new Date();
       return tweet.save();
     }).then(userTweets => {
-      Tweet.find({ userId }).populate('sender');
-      reply.view('home', {
-        title: 'Tweets to Date',
-        tweets: userTweets,
-      });
+      reply.redirect('/home');
     }).catch(err => {
       reply.redirect('/');
+    });
+  },
+};
+
+exports.deleteAll = {
+  handler: function (request, reply) {
+    var userEmail = request.auth.credentials.loggedInUser;
+    User.findOne({ email: userEmail }).then(user => {
+      Tweet.find({ sender: user }).remove('tweet').then(tweet => {
+        reply.view('home', {
+          title: 'Tweets to Date',
+        });
+      });
     });
   },
 };

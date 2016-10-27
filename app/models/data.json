@@ -24,15 +24,18 @@
     "_model": "Tweet",
     "one": {
       "message": "Don't have a cow",
+      "date": "Fri Sep 27 2016 15:43:41 GMT+0100 (GMT Summer Time)",
       "sender": "->users.bart"
 
     },
     "two": {
       "message": "I love my family",
+      "date": "Thu Oct 18 2016 14:55:41 GMT+0100 (GMT Summer Time)",
       "sender": "->users.marge"
     },
     "three": {
       "message": "Where's Moe's",
+      "date": "Wed Aug 10 2016 17:32:41 GMT+0100 (GMT Summer Time)",
       "sender": "->users.homer"
     }
   }
