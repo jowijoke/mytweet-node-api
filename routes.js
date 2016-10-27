@@ -17,7 +17,6 @@ module.exports = [
 
   { method: 'GET', path: '/home', config: Tweets.home },
   { method: 'GET', path: '/leaderboard', config: Tweets.leaderBoard },
-  { method: 'GET', path: '/send_tweet', config: Tweets.sendTweet },
 
   {
     method: 'GET',

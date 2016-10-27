@@ -143,14 +143,14 @@ exports.updateSettings = {
     const editedUser = request.payload;
     const loggedInUserEmail = request.auth.credentials.loggedInUser;
 
-    User.findOne({ email: loggedInUserEmail }).then(user => {
+    User.findOne({email: loggedInUserEmail}).then(user => {
       user.firstName = editedUser.firstName;
       user.lastName = editedUser.lastName;
       user.email = editedUser.email;
       user.password = editedUser.password;
       return user.save();
     }).then(user => {
-      reply.view('settings', { title: 'Edit Account Settings', user: user });
+      reply.view('settings', {title: 'Edit Account Settings', user: user});
     }).catch(err => {
       reply.redirect('/');
     });

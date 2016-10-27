@@ -5,13 +5,24 @@ const User = require('../models/user');
 exports.home = {
 
   handler: (request, reply) => {
-    reply.view('home', {
-      title: 'Make a Tweet',
+    var userEmail = request.auth.credentials.loggedInUser;
+    let userId = null;
+    User.findOne({ email: userEmail }).then(user => {
+      userId = user._id;
+      console.log('finding tweets');
+      Tweet.find({ sender: userId }).populate('sender').then(userTweets => {
+        reply.view('home', {
+          title: 'Tweets to Date',
+          tweets: userTweets,
+        });
+      }).catch(err => {
+        reply.redirect('/');
+      });
     });
   },
 };
 
-exports.sendTweet = {
+/*exports.sendTweet = {
 
   handler: function (request, reply) {
     Tweet.find({}).populate('sender').then(userTweets => {
@@ -24,7 +35,7 @@ exports.sendTweet = {
     });
   },
 
-};
+};*/
 
 exports.leaderBoard = {
 
@@ -53,11 +64,14 @@ exports.tweet = {
       tweet = new Tweet(data);
       tweet.sender = userId;
       return tweet.save();
-    }).then(newTweet => {
-      reply.redirect('/send_tweet');
+    }).then(userTweets => {
+      Tweet.find({ userId }).populate('sender');
+      reply.view('home', {
+        title: 'Tweets to Date',
+        tweets: userTweets,
+      });
     }).catch(err => {
       reply.redirect('/');
     });
   },
-
 };

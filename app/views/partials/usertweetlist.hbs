@@ -1,0 +1,20 @@
+<section class="ui raised segment">
+    <div class="ui grid">
+        <article class="eight wide column">
+            <table class="ui celled table segment">
+                <thead>
+                <tr>
+                    <th>Tweet</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each tweets}}
+                    <tr>
+                        <td> {{message}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </article>
+    </div>
+</section>
