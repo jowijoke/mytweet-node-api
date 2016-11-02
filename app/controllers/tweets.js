@@ -70,6 +70,21 @@ exports.tweet = {
   },
 };
 
+exports.deleteTweet = {
+
+  handler: function (request, reply) {
+    let tweetId = request.params.tweetId;
+
+    // Remove one tweet
+    Tweet.remove({ _id: tweetId }, function (err) {
+      if (err) return 'err';
+      console.log(err);
+    });
+
+    reply.redirect('/home');
+  },
+};
+
 exports.deleteAll = {
   handler: function (request, reply) {
     var userEmail = request.auth.credentials.loggedInUser;
@@ -82,3 +97,12 @@ exports.deleteAll = {
     });
   },
 };
+
+
+var Handlebars = require('handlebars');
+const moment = require('moment');
+
+Handlebars.registerHelper('dateFormat', function (timestamp) {
+  // Formatting the date using momentjs
+  return moment(timestamp).format('DD MMM YYYY HH:mm:SS');
+});

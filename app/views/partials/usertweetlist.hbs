@@ -6,14 +6,17 @@
                 <tr>
                     <th>Tweet</th>
                     <th>Date</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 {{#each tweets}}
                     <tr>
                         <td> {{message}}</td>
-                        <td> {{date}}</td>
+                        <td> {{dateFormat date}}</td>
+                        <td> <a href="/deleteTweet/{{_id}}"><i class="remove icon"></i></a> </td>
                     </tr>
+
                 {{/each}}
                 </tbody>
             </table>

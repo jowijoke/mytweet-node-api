@@ -17,6 +17,7 @@ module.exports = [
 
   { method: 'GET', path: '/home', config: Tweets.home },
   { method: 'GET', path: '/leaderboard', config: Tweets.leaderBoard },
+  { method: 'GET', path: '/deleteTweet/{tweetId}', config: Tweets.deleteTweet },
   { method: 'POST', path: '/deleteAll', config: Tweets.deleteAll },
 
   {
