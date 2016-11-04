@@ -191,13 +191,13 @@ exports.adminLogin = {
   },
 
   handler: function (request, reply) {
-    const user = request.payload;
+    const admin = request.payload;
 
-    Administrator.findOne({ email: user.email }).then(foundAdmin => {
-      if (foundAdmin && foundAdmin.password === user.password) {
+    Administrator.findOne({ email: admin.email }).then(foundAdmin => {
+      if (foundAdmin && foundAdmin.password === admin.password) {
         request.cookieAuth.set({
           loggedIn: true,
-          loggedInUser: user.email,
+          loggedInUser: admin.email,
         });
         console.log('Admin logged in');
         reply.redirect('/adminHome');

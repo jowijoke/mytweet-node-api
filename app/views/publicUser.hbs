@@ -1,18 +1,22 @@
 <section class="ui raised segment">
     <div class="ui grid">
         <article class="eight wide column">
+            <h2>{{sender.firstName}} {{sender.lastName}}</h2>
             <table class="ui celled table segment">
                 <thead>
                 <tr>
-                    <th>Users</th>
+                    <th>Tweet</th>
+                    <th>Date</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                {{#each users}}
+                {{#each tweets}}
                     <tr>
-                        <td> {{user.firstName}} {{user.lastName}}</td>
+                        <td> {{message}}</td>
+                        <td> {{dateFormat date}}</td>
                     </tr>
+
                 {{/each}}
                 </tbody>
             </table>

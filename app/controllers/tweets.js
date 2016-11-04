@@ -11,10 +11,19 @@ exports.home = {
       userId = user._id;
       console.log('finding tweets');
       Tweet.find({ sender: userId }).populate('sender').then(userTweets => {
-        reply.view('home', {
-          title: 'Tweets to Date',
-          tweets: userTweets,
-          users: userId,
+        User.find({ }).sort({ email: 'asc' }).then(users => {
+          console.log('Found ' + users.length + ' users');
+          /*  users.forEach(function (value, i) {
+              if (value._id = userId) {
+                users.splice(i, 1);
+              }
+            });*/
+          reply.view('home', {
+            title: 'Tweets to Date',
+            tweets: userTweets,
+            users: users,
+            logUser: true,
+          });
         });
       }).catch(err => {
         reply.redirect('/');
@@ -54,6 +63,20 @@ exports.tweet = {
       reply.redirect('/');
     });
   },
+};
+
+exports.public = {
+  handler: (request, reply) => {
+    User.find({ publicUser: userId }).populate('sender').then(userTweets => {
+      reply.view('publicUser', {
+        title: 'Tweets to Date',
+        tweets: usreTweets,
+      });
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+
 };
 
 exports.deleteTweet = {

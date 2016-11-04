@@ -7,6 +7,7 @@
                     <th>Tweet</th>
                     <th>Date</th>
                     <th>Delete</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -14,15 +15,30 @@
                     <tr>
                         <td> {{message}}</td>
                         <td> {{dateFormat date}}</td>
-                        <td> <a href="/deleteTweet/{{_id}}"><i class="remove icon"></i></a> </td>
+                        {{#if ../adminUser}}
+                            <td> <a href="/deleteAdminTweet/{{tweet._id}}"><i class="green remove icon"></i></a> </td>
+                        {{/if}}
+                        {{#if ../logUser}}
+                            <td> <a href="/deleteTweet/{{tweet._id}}"><i class="blue remove icon"></i></a> </td>
+                        {{/if}}
                     </tr>
 
+
                 {{/each}}
+
                 </tbody>
+                {{#if logUser}}
+                    <form action="/deleteAll" method="POST">
+                        <button class="ui blue button">Delete All</button>
+                    </form>
+                {{/if}}
+
+                {{#if adminUser}}
+                    <form action="/deleteAllUserTweets/{{user._id}}" method="POST">
+                        <button class="ui green button">Delete All</button>
+                    </form>
+                {{/if}}
             </table>
-            <form action="/deleteAll" method="POST">
-            <button class="ui blue button">Delete</button>
-                </form>
         </article>
     </div>
 </section>
