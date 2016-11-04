@@ -1,0 +1,21 @@
+<section class="ui raised segment">
+    <div class="ui grid">
+        <article class="eight wide column">
+            <table class="ui celled table segment">
+                <thead>
+                <tr>
+                    <th>Users</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {{#each users}}
+                    <tr>
+                        <td> {{user.firstName}} {{user.lastName}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </article>
+    </div>
+</section>

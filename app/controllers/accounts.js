@@ -1,6 +1,7 @@
 'use strict';
 
 const User = require('../models/user');
+const Administrator = require('../models/administrator');
 const Joi = require('joi');
 
 exports.main = {
@@ -143,16 +144,70 @@ exports.updateSettings = {
     const editedUser = request.payload;
     const loggedInUserEmail = request.auth.credentials.loggedInUser;
 
-    User.findOne({email: loggedInUserEmail}).then(user => {
+    User.findOne({ email: loggedInUserEmail }).then(user => {
       user.firstName = editedUser.firstName;
       user.lastName = editedUser.lastName;
       user.email = editedUser.email;
       user.password = editedUser.password;
       return user.save();
     }).then(user => {
-      reply.view('settings', {title: 'Edit Account Settings', user: user});
+      reply.view('settings', { title: 'Edit Account Settings', user: user });
     }).catch(err => {
       reply.redirect('/');
+    });
+  },
+
+};
+
+exports.admin = {
+  auth: false,
+  handler: function (request, reply) {
+    reply.view('adminLogin', { title: 'Administrator Login' });
+  },
+
+};
+
+exports.adminLogin = {
+  auth: false,
+
+  validate: {
+
+    payload: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+
+    options: {
+      abortEarly: false,
+    },
+
+    failAction: function (request, reply, source, error) {
+      reply.view('Login', {
+        title: 'Login error',
+        errors: error.data.details,
+      }).code(400);
+    },
+
+  },
+
+  handler: function (request, reply) {
+    const user = request.payload;
+
+    Administrator.findOne({ email: user.email }).then(foundAdmin => {
+      if (foundAdmin && foundAdmin.password === user.password) {
+        request.cookieAuth.set({
+          loggedIn: true,
+          loggedInUser: user.email,
+        });
+        console.log('Admin logged in');
+        reply.redirect('/adminHome');
+      } else {
+        console.log('Failed to login');
+        reply.redirect('/admin');
+      }
+    }).catch(err => {
+      console.log('Fail to login');
+      reply.redirect('/admin');
     });
   },
 

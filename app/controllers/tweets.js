@@ -14,6 +14,7 @@ exports.home = {
         reply.view('home', {
           title: 'Tweets to Date',
           tweets: userTweets,
+          users: userId,
         });
       }).catch(err => {
         reply.redirect('/');
@@ -21,21 +22,6 @@ exports.home = {
     });
   },
 };
-
-/*exports.sendTweet = {
-
-  handler: function (request, reply) {
-    Tweet.find({}).populate('sender').then(userTweets => {
-      reply.view('home', {
-        title: 'Tweets to Date',
-        tweets: userTweets,
-      });
-    }).catch(err => {
-      reply.redirect('/');
-    });
-  },
-
-};*/
 
 exports.leaderBoard = {
 
@@ -97,7 +83,6 @@ exports.deleteAll = {
     });
   },
 };
-
 
 var Handlebars = require('handlebars');
 const moment = require('moment');
