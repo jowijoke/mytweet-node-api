@@ -1,5 +1,6 @@
 const Accounts = require('./app/controllers/accounts');
 const Tweets = require('./app/controllers/tweets');
+const Admin = require('./app/controllers/admin');
 const Assets = require('./app/controllers/assets');
 
 module.exports = [
@@ -12,13 +13,23 @@ module.exports = [
   { method: 'POST', path: '/tweet', config: Tweets.tweet },
   { method: 'GET', path: '/logout', config: Accounts.logout },
 
+  { method: 'GET',    path: '/admin', config: Accounts.admin },
+  { method: 'POST', path: '/adminLogin', config: Accounts.adminLogin },
+  { method: 'GET', path: '/adminHome', config: Admin.home },
+  { method: 'GET', path: '/deleteAdminTweet/{tweetId}', config: Admin.deleteTweet },
+  { method: 'GET', path: '/editUser/{userId}', config: Admin.editUser },
+  { method: 'POST', path: '/saveUser/{userId}', config: Admin.saveUser },
+  { method: 'GET', path: '/removeUser/{userId}', config: Admin.removeUser },
+
   { method: 'GET', path: '/settings', config: Accounts.viewSettings },
   { method: 'POST', path: '/settings', config: Accounts.updateSettings },
 
   { method: 'GET', path: '/home', config: Tweets.home },
+  { method: 'GET', path: '/publicUser/{userId}', config: Tweets.public },
   { method: 'GET', path: '/leaderboard', config: Tweets.leaderBoard },
   { method: 'GET', path: '/deleteTweet/{tweetId}', config: Tweets.deleteTweet },
   { method: 'POST', path: '/deleteAll', config: Tweets.deleteAll },
+  { method: 'POST', path: '/deleteAllUserTweets/{userId}', config: Admin.deleteAllUserTweets },
 
   {
     method: 'GET',

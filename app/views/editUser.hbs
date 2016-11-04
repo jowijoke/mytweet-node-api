@@ -1,0 +1,15 @@
+{{#if adminUser}}
+    {{> adminmenu _id="/" }}
+{{/if}}
+
+<section class="ui raised segment">
+    <div class="ui two column grid">
+        <div class="column">
+            {{> userdetails}}
+        </div>
+        <div class="column">
+             {{> usertweetlist}}
+        </div>
+    </div>
+
+</section>

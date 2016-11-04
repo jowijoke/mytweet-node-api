@@ -20,6 +20,15 @@
       "password": "secret"
     }
   },
+
+  "administrators": {
+    "_model": "Administrator",
+    "Administrator": {
+      "email": "admin@wit.com",
+      "password": "secret"
+    }
+  },
+
   "tweets": {
     "_model": "Tweet",
     "one": {

@@ -1,0 +1,28 @@
+<div class="ui grid ">
+  <div class="ui form eleven wide column">
+    <div class="ui stacked fluid form segment">
+      <form action="/saveUser/{{user._id}}" method="POST">
+          <h3 class="ui header">User Details</h3>
+        <div class="three fields">
+          <div class="field">
+            <label>First Name</label>
+            <input value="{{user.firstName}}" type="text" name="firstName">
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input value="{{user.lastName}}" type="text" name="lastName">
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input value="{{user.email}}" type="text" name="email">
+        </div>
+        <button class="ui green submit button">Save</button>
+        </form>
+      {{> formerror }}
+    </div>
+
+    <aside class="four wide column">
+    </aside>
+  </div>
+</div>
