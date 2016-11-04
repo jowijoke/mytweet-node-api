@@ -105,7 +105,7 @@ exports.deleteTweet = {
       console.log(err);
     });
 
-    reply.redirect('/home');
+    reply.redirect('/adminHome');
   },
 };
 
