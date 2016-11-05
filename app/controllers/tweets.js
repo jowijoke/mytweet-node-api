@@ -13,11 +13,12 @@ exports.home = {
       Tweet.find({ sender: userId }).populate('sender').then(userTweets => {
         User.find({ }).sort({ email: 'asc' }).then(users => {
           console.log('Found ' + users.length + ' users');
-          /*  users.forEach(function (value, i) {
-              if (value._id = userId) {
-                users.splice(i, 1);
-              }
-            });*/
+          users.forEach(function (value, i) {
+            if (value.email == userEmail) {
+              users.splice(i, 1);
+              console.log('Have ' + users.length + ' left');
+            }
+          });
           reply.view('home', {
             title: 'Tweets to Date',
             tweets: userTweets,
@@ -66,17 +67,27 @@ exports.tweet = {
 };
 
 exports.public = {
-  handler: (request, reply) => {
-    User.find({ publicUser: userId }).populate('sender').then(userTweets => {
-      reply.view('publicUser', {
-        title: 'Tweets to Date',
-        tweets: usreTweets,
+
+  handler: function (request, reply) {
+
+    let userId = request.params.senderId;
+
+    console.log('User Id ' + userId);
+
+    User.findOne({ _id: userId }).then(user => {
+      console.log('Found user ' + user.email);
+      Tweet.find({ sender: userId }).populate('sender').then(userTweets => {
+        reply.view('publicUser', {
+          title: 'public Timeline',
+          user: user,
+          tweets: userTweets,
+          adminUser: true,
+        });
+      }).catch(err => {
+        reply.redirect('/');
       });
-    }).catch(err => {
-      reply.redirect('/');
     });
   },
-
 };
 
 exports.deleteTweet = {

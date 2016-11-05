@@ -1,6 +1,6 @@
 <section class="ui raised segment">
     <div class="ui grid">
-        <article class="eight wide column">
+        <article class="six wide column">
             <table class="ui celled table segment">
                 <thead>
                 <tr>
@@ -25,8 +25,6 @@
 
 
                 {{/each}}
-
-                </tbody>
                 {{#if logUser}}
                     <form action="/deleteAll" method="POST">
                         <button class="ui blue button">Delete All</button>
@@ -38,6 +36,8 @@
                         <button class="ui green button">Delete All</button>
                     </form>
                 {{/if}}
+                </tbody>
+
             </table>
         </article>
     </div>

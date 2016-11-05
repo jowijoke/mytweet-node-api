@@ -1,27 +1,28 @@
 <section class="ui raised segment">
     <div class="ui grid">
-        <article class="eight wide column">
             <table class="ui celled table segment">
                 <thead>
                 <tr>
                     <th>Users</th>
+                    {{#if adminUser}}
                     <th>Edit</th>
                     <th>Delete</th>
+                    {{/if}}
 
                 </tr>
                 </thead>
                 <tbody
                 {{#each users}}
                     <tr>
-                        <td> {{firstName}} {{lastName}}</td>
+                        <td> <a href="/publicUser/{{_id}}">{{firstName}} {{lastName}}</a></td>
+                        {{#if ../adminUser}}
                         <td> <a href="/editUser/{{_id}}"><i class="green edit icon"></i></a></td>
                         <td> <a href="/removeUser/{{_id}}"><i class="green remove icon"></i></a> </td>
+                        {{/if}}
+
                     </tr>
                 {{/each}}
                 </tbody>
             </table>
-            </article>
             </div>
-        </article>
-    </div>
 </section>

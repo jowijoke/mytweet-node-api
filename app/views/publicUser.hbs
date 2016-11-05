@@ -1,6 +1,10 @@
+{{> mainmenu }}
+
+
 <section class="ui raised segment">
     <div class="ui grid">
         <article class="eight wide column">
+            {{#each tweets}}
             <h2>{{sender.firstName}} {{sender.lastName}}</h2>
             <table class="ui celled table segment">
                 <thead>
@@ -11,7 +15,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{#each tweets}}
+
                     <tr>
                         <td> {{message}}</td>
                         <td> {{dateFormat date}}</td>

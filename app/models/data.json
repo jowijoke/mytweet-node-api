@@ -14,9 +14,9 @@
       "password": "secret"
     },
     "bart": {
-      "firstName": "Bart",
+      "firstName": "Lisa",
       "lastName": "Simpson",
-      "email": "bart@simpson.com",
+      "email": "lisa@simpson.com",
       "password": "secret"
     }
   },
@@ -32,9 +32,9 @@
   "tweets": {
     "_model": "Tweet",
     "one": {
-      "message": "Don't have a cow",
+      "message": "Lisa for president!!",
       "date": "Fri Sep 27 2016 15:43:41 GMT+0100 (GMT Summer Time)",
-      "sender": "->users.bart"
+      "sender": "->users.lisa"
 
     },
     "two": {
