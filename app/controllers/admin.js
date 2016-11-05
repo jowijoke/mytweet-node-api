@@ -69,10 +69,12 @@ exports.removeAllUsers = {
 
   handler: function (request, reply) {
     console.log('Removing users');
-    User.find({}).populate('users').then(allUsers => {
-      User.remove(allUsers).then(admin => {
-        reply.view('adminHome', {
-          title: 'adminpage',
+    Tweet.find({}).remove('tweets').then(user => {
+      User.find({}).populate('users').then(allUsers => {
+        User.remove(allUsers).then(admin => {
+          reply.view('adminHome', {
+            title: 'adminpage',
+          });
         });
       });
     });

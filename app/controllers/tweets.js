@@ -19,6 +19,7 @@ exports.home = {
               console.log('Have ' + users.length + ' left');
             }
           });
+
           reply.view('home', {
             title: 'Tweets to Date',
             tweets: userTweets,

@@ -182,7 +182,7 @@ exports.adminLogin = {
     },
 
     failAction: function (request, reply, source, error) {
-      reply.view('Login', {
+      reply.view('adminLogin', {
         title: 'Login error',
         errors: error.data.details,
       }).code(400);
