@@ -20,6 +20,7 @@ module.exports = [
   { method: 'POST', path: '/saveUser/{userId}', config: Admin.saveUser },
   { method: 'GET', path: '/removeUser/{userId}', config: Admin.removeUser },
   { method: 'POST', path: '/deleteAllUserTweets/{userId}', config: Admin.deleteAllUserTweets },
+  { method: 'POST', path: '/removeAllUsers', config: Admin.removeAllUsers },
 
   { method: 'GET', path: '/settings', config: Accounts.viewSettings },
   { method: 'POST', path: '/settings', config: Accounts.updateSettings },

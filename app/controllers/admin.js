@@ -65,6 +65,20 @@ exports.removeUser = {
     },
 };
 
+exports.removeAllUsers = {
+
+  handler: function (request, reply) {
+    console.log('Removing users');
+    User.find({}).populate('users').then(allUsers => {
+      User.remove(allUsers).then(admin => {
+        reply.view('adminHome', {
+          title: 'adminpage',
+        });
+      });
+    });
+  },
+};
+
 exports.saveUser = {
 
   handler: function (request, reply) {

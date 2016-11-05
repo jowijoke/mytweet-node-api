@@ -5,8 +5,8 @@
                 <tr>
                     <th>Users</th>
                     {{#if adminUser}}
-                    <th>Edit</th>
-                    <th>Delete</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     {{/if}}
 
                 </tr>
@@ -14,15 +14,24 @@
                 <tbody
                 {{#each users}}
                     <tr>
-                        <td> <a href="/publicUser/{{_id}}">{{firstName}} {{lastName}}</a></td>
+                        {{#if ../logUser}}
+                            <td> <a href="/publicUser/{{_id}}">{{firstName}} {{lastName}}</a></td>
+                        {{/if}}
+
                         {{#if ../adminUser}}
-                        <td> <a href="/editUser/{{_id}}"><i class="green edit icon"></i></a></td>
-                        <td> <a href="/removeUser/{{_id}}"><i class="green remove icon"></i></a> </td>
+                            <td>{{firstName}} {{lastName}}</td>
+                            <td> <a href="/editUser/{{_id}}"><i class="green edit icon"></i></a></td>
+                            <td> <a href="/removeUser/{{_id}}"><i class="green remove icon"></i></a> </td>
                         {{/if}}
 
                     </tr>
                 {{/each}}
                 </tbody>
+                    {{#if adminUser}}
+                        <form action="/removeAllUsers" method="POST">
+                            <button class="ui green button">Delete All Users</button>
+                        </form>
+                    {{/if}}
             </table>
             </div>
 </section>
