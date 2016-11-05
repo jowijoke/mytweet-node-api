@@ -53,16 +53,14 @@ exports.editUser = {
 exports.removeUser = {
 
   handler: function (request, reply) {
-      let userId = request.params.userId;
-
+    let userId = request.params.userId;
+    Tweet.find({ sender: userId }).remove('tweets').then(user => {
       console.log('Removing user: ' + userId);
-      User.remove({ _id: userId }, function (err) {
-        if (err) return 'err';
-        console.log(err);
+      User.remove({ _id: userId }).then(admin => {
+        reply.redirect('/adminHome');
       });
-
-      reply.redirect('/adminHome');
-    },
+    });
+  },
 };
 
 exports.removeAllUsers = {
