@@ -16,10 +16,10 @@
                         <td> {{message}}</td>
                         <td> {{dateFormat date}}</td>
                         {{#if ../adminUser}}
-                            <td> <a href="/deleteAdminTweet/{{tweet._id}}"><i class="green remove icon"></i></a> </td>
+                            <td> <a href="/deleteAdminTweet/{{id}}"><i class="green remove icon"></i></a> </td>
                         {{/if}}
                         {{#if ../logUser}}
-                            <td> <a href="/deleteTweet/{{tweet._id}}"><i class="blue remove icon"></i></a> </td>
+                            <td> <a href="/deleteTweet/{{_id}}"><i class="blue remove icon"></i></a> </td>
                         {{/if}}
                     </tr>
 

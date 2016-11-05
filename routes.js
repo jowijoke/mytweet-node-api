@@ -10,16 +10,16 @@ module.exports = [
   { method: 'POST', path: '/register', config: Accounts.register },
   { method: 'GET', path: '/login', config: Accounts.login },
   { method: 'POST', path: '/login', config: Accounts.authenticate },
-  { method: 'POST', path: '/tweet', config: Tweets.tweet },
   { method: 'GET', path: '/logout', config: Accounts.logout },
-
   { method: 'GET',    path: '/admin', config: Accounts.admin },
   { method: 'POST', path: '/adminLogin', config: Accounts.adminLogin },
+
   { method: 'GET', path: '/adminHome', config: Admin.home },
-  { method: 'GET', path: '/deleteAdminTweet/{tweetId}', config: Admin.deleteTweet },
+  { method: 'GET', path: '/deleteAdminTweet/{tweetId}', config: Admin.deleteAdminTweet },
   { method: 'GET', path: '/editUser/{userId}', config: Admin.editUser },
   { method: 'POST', path: '/saveUser/{userId}', config: Admin.saveUser },
   { method: 'GET', path: '/removeUser/{userId}', config: Admin.removeUser },
+  { method: 'POST', path: '/deleteAllUserTweets/{userId}', config: Admin.deleteAllUserTweets },
 
   { method: 'GET', path: '/settings', config: Accounts.viewSettings },
   { method: 'POST', path: '/settings', config: Accounts.updateSettings },
@@ -29,7 +29,7 @@ module.exports = [
   { method: 'GET', path: '/leaderboard', config: Tweets.leaderBoard },
   { method: 'GET', path: '/deleteTweet/{tweetId}', config: Tweets.deleteTweet },
   { method: 'POST', path: '/deleteAll', config: Tweets.deleteAll },
-  { method: 'POST', path: '/deleteAllUserTweets/{userId}', config: Admin.deleteAllUserTweets },
+  { method: 'POST', path: '/tweet', config: Tweets.tweet },
 
   {
     method: 'GET',

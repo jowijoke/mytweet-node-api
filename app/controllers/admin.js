@@ -94,7 +94,7 @@ exports.saveUser = {
   },
 };
 
-exports.deleteTweet = {
+exports.deleteAdminTweet = {
 
   handler: function (request, reply) {
     let tweetId = request.params.tweetId;
@@ -111,7 +111,7 @@ exports.deleteTweet = {
 
 exports.deleteAllUserTweets = {
   handler: function (request, reply) {
-    var userId = request.params.userId;;
+    var userId = request.params.userId;
     User.findOne({ _id: userId }).then(user => {
       Tweet.find({ sender: user }).remove('tweet').then(tweet => {
         reply.redirect('/adminHome', {
