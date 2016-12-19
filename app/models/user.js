@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const FriendsOfFriends = require('friends-of-friends');
 
 const userSchema = mongoose.Schema({
   firstName: String,
@@ -9,6 +10,8 @@ const userSchema = mongoose.Schema({
   password: String,
 });
 
-const User = mongoose.model('User', userSchema);
+userSchema.plugin(FriendsOfFriends.plugin, options);
+
+const User = mongoose.model(options.personModelName, userSchema);
 module.exports = User;
 

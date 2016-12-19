@@ -2,6 +2,7 @@ const Accounts = require('./app/controllers/accounts');
 const Tweets = require('./app/controllers/tweets');
 const Admin = require('./app/controllers/admin');
 const Assets = require('./app/controllers/assets');
+const Friendships = require('./app/controllers/friendships')
 
 module.exports = [
 
@@ -13,6 +14,8 @@ module.exports = [
   { method: 'GET', path: '/logout', config: Accounts.logout },
   { method: 'GET',    path: '/admin', config: Accounts.admin },
   { method: 'POST', path: '/adminLogin', config: Accounts.adminLogin },
+
+  { method: 'GET', path: '/follow/{targetId}', config: Friendships.follow },
 
   { method: 'GET', path: '/adminHome', config: Admin.home },
   { method: 'GET', path: '/deleteAdminTweet/{tweetId}', config: Admin.deleteAdminTweet },

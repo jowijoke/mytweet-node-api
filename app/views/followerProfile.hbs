@@ -1,0 +1,29 @@
+{{> mainmenu }}
+
+
+<section class="ui raised segment">
+    <div class="ui grid">
+        <article class="eight wide column">
+            {{#each user}}
+                <h2>{{firstName}} {{lastName}}</h2>
+            {{/each}}
+            <table class="ui celled table segment">
+                <thead>
+                <tr>
+                    <th>Tweet</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each tweets}}
+                    <tr>
+                        <td> {{message}}</td>
+                        <td> {{dateFormat date}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+
+        </article>
+    </div>
+</section>
