@@ -1,0 +1,21 @@
+<section class="ui raised segment">
+    <div class="ui grid">
+        <table class="ui celled table segment">
+            <thead>
+            <tr>
+                <th>Followers</th>
+            </tr>
+            </thead>
+            <tbody
+            {{#each users}}
+                <tr>
+                    {{#if ../logUser}}
+                        <td> <a href="/follower/{{_id}}">{{firstName}} {{lastName}}</a></td>
+                        <td> <a href="/unfollow/{{_id}}"><button class="ui blue submit button">Unfollow</button></a> </td>
+                    {{/if}}
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>
