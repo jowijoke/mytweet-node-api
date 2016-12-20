@@ -9,6 +9,6 @@ const tweetSchema = mongoose.Schema({
   date: Date,
 });
 
-const Tweet = mongoose.model('Follower', tweetSchema);
+const Tweet = mongoose.model('Tweet', tweetSchema);
 module.exports = Tweet;
 

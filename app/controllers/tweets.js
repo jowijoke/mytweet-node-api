@@ -1,38 +1,40 @@
 'use strict';
 const Tweet = require('../models/tweet');
 const User = require('../models/user');
-
+const Friendship = require('../models/user');
 exports.home = {
 
   handler: (request, reply) => {
-    var userEmail = request.auth.credentials.loggedInUser;
+    const userEmail = request.auth.credentials.loggedInUser;
     let userId = null;
     User.findOne({ email: userEmail }).then(user => {
       userId = user._id;
-      console.log('finding tweets');
-      Tweet.find({ sender: userId }).populate('sender').then(userTweets => {
-        User.find({ }).sort({ email: 'asc' }).then(users => {
-          console.log('Found ' + users.length + ' users');
-          users.forEach(function (value, i) {
-            if (value.email == userEmail) {
-              users.splice(i, 1);
-              console.log('Have ' + users.length + ' left');
-            }
+      Friendship.findOne({'friendships.requester': userId}).populate('friends').then(friendReq => {
+        console.log('finding tweets');
+        Tweet.find({sender: userId}).populate('sender').then(userTweets => {
+          User.find({}).sort({email: 'asc'}).then(users => {
+            console.log('Found ' + users.length + ' users');
+            users.forEach(function (value, i) {
+              if (value.email == userEmail) {
+                users.splice(i, 1);
+                console.log('Have ' + users.length + ' left');
+              }
+            });
+            reply.view('home', {
+              title: 'Tweets to Date',
+              tweets: userTweets,
+              friendships: user,
+              users: users,
+              logUser: true,
+            });
           });
-
-          reply.view('home', {
-            title: 'Tweets to Date',
-            tweets: userTweets,
-            users: users,
-            logUser: true,
-          });
+        }).catch(err => {
+          reply.redirect('/');
         });
-      }).catch(err => {
-        reply.redirect('/');
       });
     });
-  },
-};
+    },
+  };
 
 exports.leaderBoard = {
 

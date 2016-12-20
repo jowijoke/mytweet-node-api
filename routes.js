@@ -15,7 +15,7 @@ module.exports = [
   { method: 'GET',    path: '/admin', config: Accounts.admin },
   { method: 'POST', path: '/adminLogin', config: Accounts.adminLogin },
 
-  { method: 'GET', path: '/follow/{targetId}', config: Friendships.follow },
+  { method: 'GET', path: '/follow/{targetId}', config: Friendships.friendRequest },
 
   { method: 'GET', path: '/adminHome', config: Admin.home },
   { method: 'GET', path: '/deleteAdminTweet/{tweetId}', config: Admin.deleteAdminTweet },

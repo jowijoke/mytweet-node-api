@@ -7,12 +7,12 @@
             </tr>
             </thead>
             <tbody
-            {{#each users}}
+            {{#each friendships}}
                 <tr>
-                    {{#if ../logUser}}
-                        <td> <a href="/follower/{{_id}}">{{firstName}} {{lastName}}</a></td>
+
+                        <td> <a href="/follower/{{_id}}">{{friends.id}} {{friends.lastName}}</a></td>
                         <td> <a href="/unfollow/{{_id}}"><button class="ui blue submit button">Unfollow</button></a> </td>
-                    {{/if}}
+
                 </tr>
             {{/each}}
             </tbody>
