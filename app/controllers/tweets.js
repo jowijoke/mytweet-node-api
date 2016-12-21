@@ -11,20 +11,29 @@ exports.home = {
     User.findOne({ email: userEmail }).then(user => {
       userId = user._id;
       console.log('finding tweets');
-        Tweet.find({sender: userId}).populate('sender').then(userTweets => {
-          User.find().nor({ _id: user._id }).sort({email: 'asc'}).then(users => {
-            Follower.find({ follower: user }).then(allFollowers => {
-            console.log('Found ' + users.length + ' users');
-            reply.view('home', {
-              title: 'Tweets to Date',
-              tweets: userTweets,
-              followers: allFollowers,
-              users: users,
-              logUser: true,
-            });
+      Tweet.find({sender: userId}).populate('user').then(userTweets => {
+        // Get all the users the current user is following
+        Follower.find({follower: user}).populate('following').then(allFollowers => {
+          // Create an array of the current user and who they follow
+          var members = [userId];
+          allFollowers.forEach(function (index) {
+            members.push(index.following.id);
           });
-        }).catch(err => {
-          reply.redirect('/');
+          Tweet.find({sender: {$in: members}}).populate('sender').sort({date: 'asc'}).then(followerTweets => {
+            User.find().nor({_id: user._id}).sort({email: 'asc'}).then(users => {
+              console.log('Found ' + users.length + ' users');
+              reply.view('home', {
+                title: 'Tweets to Date',
+                tweets: followerTweets,
+                userTweets: userTweets,
+                followers: allFollowers,
+                users: users,
+                logUser: true,
+              });
+            });
+          }).catch(err => {
+            reply.redirect('/');
+          });
         });
       });
     });

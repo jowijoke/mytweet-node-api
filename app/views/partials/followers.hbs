@@ -1,17 +1,20 @@
 <section class="ui raised segment">
     <div class="ui grid">
         <table class="ui celled table segment">
+            <h3>Followers</h3>
             <thead>
             <tr>
-                <th>Followers</th>
+                <th>Name</th>
+                <th>Tweet</th>
+                <th>Date</th>
             </tr>
             </thead>
             <tbody
-            {{#each followers}}
+            {{#each tweets}}
                 <tr>
-
-                        <td> <a href="/follower/{{_id}}">{{following.firstName}} {{following.lastName}}</a></td>
-                        <td> <a href="/unfollow/{{_id}}"><button class="ui blue submit button">Unfollow</button></a> </td>
+                    <td>{{sender.firstName}}</td>
+                    <td> {{message}}</td>
+                    <td> {{dateFormat date}}</td>
 
                 </tr>
             {{/each}}
