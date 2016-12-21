@@ -1,7 +1,8 @@
 'use strict';
 const Tweet = require('../models/tweet');
 const User = require('../models/user');
-const Friendship = require('../models/user');
+//const Friendship = require('mongoose').model('Followers');
+const Follower = require('../models/follower');
 exports.home = {
 
   handler: (request, reply) => {
@@ -9,21 +10,15 @@ exports.home = {
     let userId = null;
     User.findOne({ email: userEmail }).then(user => {
       userId = user._id;
-      Friendship.findOne({'friendships.requester': userId}).populate('friends').then(friendReq => {
-        console.log('finding tweets');
+      console.log('finding tweets');
         Tweet.find({sender: userId}).populate('sender').then(userTweets => {
-          User.find({}).sort({email: 'asc'}).then(users => {
+          User.find().nor({ _id: user._id }).sort({email: 'asc'}).then(users => {
+            Follower.find({ follower: user }).then(allFollowers => {
             console.log('Found ' + users.length + ' users');
-            users.forEach(function (value, i) {
-              if (value.email == userEmail) {
-                users.splice(i, 1);
-                console.log('Have ' + users.length + ' left');
-              }
-            });
             reply.view('home', {
               title: 'Tweets to Date',
               tweets: userTweets,
-              friendships: user,
+              followers: allFollowers,
               users: users,
               logUser: true,
             });

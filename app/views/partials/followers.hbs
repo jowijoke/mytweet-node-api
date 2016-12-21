@@ -7,10 +7,10 @@
             </tr>
             </thead>
             <tbody
-            {{#each friendships}}
+            {{#each followers}}
                 <tr>
 
-                        <td> <a href="/follower/{{_id}}">{{friends.id}} {{friends.lastName}}</a></td>
+                        <td> <a href="/follower/{{_id}}">{{following.firstName}} {{following.lastName}}</a></td>
                         <td> <a href="/unfollow/{{_id}}"><button class="ui blue submit button">Unfollow</button></a> </td>
 
                 </tr>

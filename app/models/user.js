@@ -10,20 +10,21 @@ const userSchema = mongoose.Schema({
   password: String,
 });
 
-const options = {
-  // define the name for your Users model.
-  personModelName:            'User',
-  // define the name for the Friendship model
-  friendshipModelName:        'Friendship',
-  // define the name of the Friendship collection.
-  friendshipCollectionName:   'Friendships'
-};
+// const friendship = {
+//   // define the name for your Users model.
+//   personModelName:            'User',
+//   // define the name for the Friendship model
+//   friendshipModelName:        'Friendship',
+//   // define the name of the Friendship collection.
+//   friendshipCollectionName:   'Followers'
+// };
+//
+// const FriendsOfFriends = require('friends-of-friends')(mongoose, friendship);
+//
+// userSchema.plugin(FriendsOfFriends.plugin, friendship);
 
-const FriendsOfFriends = require('friends-of-friends')(mongoose, options);
-
-userSchema.plugin(FriendsOfFriends.plugin, options);
-
-const User = mongoose.model(options.personModelName, userSchema);
+//const User = mongoose.model(friendship.personModelName, userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
 
