@@ -15,12 +15,13 @@ exports.home = {
         // Get all the users the current user is following
         Follower.find({follower: user}).populate('following').then(allFollowers => {
           // Create an array of the current user and who they follow
-          var members = [user];
+          const following = [user];
           allFollowers.forEach(function (index) {
-            members.push(index.following.id);
+            following.push(index.following.id);
           });
-          Tweet.find({sender: {$in: members}}).nor({sender: userId}).populate('sender').sort({date: 'asc'}).then(followerTweets => {
-            User.find().nor({_id: userId}).sort({email: 'asc'}).then(users => {
+
+          Tweet.find({sender: {$in: following}}).nor({sender: userId}).populate('sender').sort({date: 'asc'}).then(followerTweets => {
+            User.find().nor({_id: {$in: following}}).sort({email: 'asc'}).then(users => {
               console.log('Found ' + users.length + ' users');
               reply.view('home', {
                 title: 'Tweets to Date',
