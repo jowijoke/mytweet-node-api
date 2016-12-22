@@ -37,14 +37,13 @@ exports.unfollow = {
   handler: function (request, reply) {
 
       let followId = request.params.followId;
-
-      // Remove one tweet
-      Follower.remove({ _id: followId }, function (err) {
+      console.log('Removing ' + followId);
+      Follower.find({following: followId}).remove('follower').then(allFollowers => {
         if (err) return 'err';
         console.log(err);
       });
 
-      reply.redirect('/home');
+      reply.redirect('/settings');
     },
   };
 
@@ -65,12 +64,12 @@ exports.followerProfile = {
           following.push(index.following.id);
         });
 
-        Tweet.find({sender: {$in: following}}).nor({sender: followerId}).populate('sender').sort({date: 'asc'}).then(followerTweets => {
+        User.find({_id: {$in: following}}).nor({_id: followerId}).then(users => {
 
             reply.view('followerProfile', {
               title: 'follower Timeline',
               follower: chosenFollower,
-              tweets: followerTweets,
+              users: users,
               followerTweets: userTweets,
             });
           }).catch(err => {

@@ -3,6 +3,7 @@
 const User = require('../models/user');
 const Administrator = require('../models/administrator');
 const Joi = require('joi');
+const Follower = require('../models/follower');
 
 exports.main = {
   auth: false,
@@ -106,16 +107,22 @@ exports.authenticate = {
 exports.viewSettings = {
 
   handler: function (request, reply) {
-    var userEmail = request.auth.credentials.loggedInUser;
-    User.findOne({ email: userEmail }).then(foundUser => {
-
-
-      reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
-    }).catch(err => {
-      reply.redirect('/');
+    const userEmail = request.auth.credentials.loggedInUser;
+    User.findOne({email: userEmail}).then(user => {
+      Follower.find({follower: user}).populate('following').then(allFollowers => {
+        // Create an array of the current user and who they follow
+        const following = [user];
+        allFollowers.forEach(function (index) {
+          following.push(index.following.id);
+        });
+        User.find({_id: {$in: following}}).nor({_id: user}).sort({email: 'asc'}).then(users => {
+          reply.view('settings', {title: 'Edit Account Settings', user: user, users: users,logUser: true,Following: true,});
+        }).catch(err => {
+          reply.redirect('/');
+        });
+      });
     });
   },
-
 };
 
 exports.updateSettings = {

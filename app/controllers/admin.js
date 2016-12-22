@@ -40,7 +40,7 @@ exports.editUser = {
         reply.view('editUser', {
           title: 'Edit User',
           user: user,
-          tweets: userTweets,
+          userTweets: userTweets,
           adminUser: true,
         });
       }).catch(err => {
@@ -112,14 +112,11 @@ exports.deleteAdminTweet = {
 
   handler: function (request, reply) {
     let tweetId = request.params.tweetId;
-
+    console.log('Removing tweet ' + tweetId);
     // Remove one tweet
-    Tweet.remove({ _id: tweetId }, function (err) {
-      if (err) return 'err';
-      console.log(err);
+    Tweet.find({_id: tweetId}).remove('tweet').then(tweets => {
+      reply.redirect('/adminHome');
     });
-
-    reply.redirect('/adminHome');
   },
 };
 

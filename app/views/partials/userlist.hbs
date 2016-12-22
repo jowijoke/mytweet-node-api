@@ -19,8 +19,15 @@
                 {{#each users}}
                     <tr>
                         {{#if ../logUser}}
+                            {{#if ../notFollowing}}
                             <td> <a href="/publicUser/{{_id}}">{{firstName}} {{lastName}}</a></td>
                             <td> <a href="/follow/{{_id}}"><button class="ui blue submit button">Follow</button></a>
+                            {{/if}}
+
+                            {{#if../Following}}
+                            <td> <a href="/followerProfile/{{_id}}">{{firstName}} {{lastName}}</a></td>
+                            <td> <a href="/unfollow/{{_id}}"><button class="ui red submit button">Unfollow</button></a>
+                            {{/if}}
                         {{/if}}
 
                         {{#if ../adminUser}}

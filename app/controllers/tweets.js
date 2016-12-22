@@ -24,11 +24,12 @@ exports.home = {
             User.find().nor({_id: {$in: following}}).sort({email: 'asc'}).then(users => {
               console.log('Found ' + users.length + ' users');
               reply.view('home', {
-                title: 'Tweets to Date',
+                title: 'Homepage',
                 tweets: followerTweets,
                 userTweets: userTweets,
                 users: users,
                 logUser: true,
+                notFollowing: true,
               });
             });
           }).catch(err => {

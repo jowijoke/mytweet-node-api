@@ -31,21 +31,16 @@
             <h3>Followers</h3>
             <section class="ui raised segment">
                 <div class="ui grid">
-                    <table class="ui celled table segment">
+                    <table class="ui  table ">
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Tweet</th>
-                            <th>Date</th>
                         </tr>
                         </thead>
                         <tbody
-                        {{#each tweets}}
+                        {{#each users}}
                             <tr>
-                                <td>{{sender.firstName}} {{sender.lastName}}</td>
-                                <td> {{message}}</td>
-                                <td> {{dateFormat date}}</td>
-
+                                <td>{{firstName}} {{lastName}}</td>
                             </tr>
                         {{/each}}
                         </tbody>
