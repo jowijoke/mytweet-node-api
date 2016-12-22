@@ -17,6 +17,8 @@ module.exports = [
 
   { method: 'GET', path: '/follow/{targetId}', config: Followers.follow },
   { method: 'GET', path: '/unfollow/{followId}', config: Followers.unfollow },
+  { method: 'GET', path: '/followerProfile/{followerId}', config: Followers.followerProfile},
+
 
   { method: 'GET', path: '/adminHome', config: Admin.home },
   { method: 'GET', path: '/deleteAdminTweet/{tweetId}', config: Admin.deleteAdminTweet },

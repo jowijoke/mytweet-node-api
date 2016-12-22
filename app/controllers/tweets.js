@@ -97,6 +97,7 @@ exports.public = {
   },
 };
 
+
 exports.deleteTweet = {
 
   handler: function (request, reply) {

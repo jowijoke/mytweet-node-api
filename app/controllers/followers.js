@@ -2,8 +2,7 @@
 
 const User = require('../models/user');
 const Follower = require('../models/follower');
-const Handlebars = require('handlebars');
-
+const Tweet = require('../models/tweet');
 
 
 exports.follow = {
@@ -49,27 +48,37 @@ exports.unfollow = {
     },
   };
 
-Handlebars.registerHelper('following', function (userId, followers, options) { //callback
-  console.log(userId);
+exports.followerProfile = {
 
-  var result = false;
+  handler: function (request, reply) {
 
-  followers.filter(function (item) {
+    let followerId = request.params.followerId;
 
-    // To compare two ArrayBuffers, need to compare each element
-    if (userId.id.every(function (u, i) {
-          return u === item.following.id[i];
-        })
-    )
-    {
-      result = true;
-    }
+    console.log('FollowerId ' + followerId);
 
-  });
+    User.findOne({ _id: followerId }).then(chosenFollower => {
+      Tweet.find({sender: followerId}).populate('sender').then(userTweets => {
+      Follower.find({follower: followerId}).populate('following').then(allFollowers => {
+        // Create an array of the current user and who they follow
+        const following = [followerId];
+        allFollowers.forEach(function (index) {
+          following.push(index.following.id);
+        });
 
-  if (result) {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
+        Tweet.find({sender: {$in: following}}).nor({sender: followerId}).populate('sender').sort({date: 'asc'}).then(followerTweets => {
+
+            reply.view('followerProfile', {
+              title: 'follower Timeline',
+              follower: chosenFollower,
+              tweets: followerTweets,
+              followerTweets: userTweets,
+            });
+          }).catch(err => {
+            reply.redirect('/');
+          });
+        });
+      });
+    });
+  },
+};
+

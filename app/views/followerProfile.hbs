@@ -4,7 +4,8 @@
 <section class="ui raised segment">
     <div class="ui grid">
         <article class="eight wide column">
-            {{#each user}}
+            <div class="column">
+            {{#each follower}}
                 <h2>{{firstName}} {{lastName}}</h2>
             {{/each}}
             <table class="ui celled table segment">
@@ -15,7 +16,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{#each tweets}}
+                {{#each followerTweets}}
                     <tr>
                         <td> {{message}}</td>
                         <td> {{dateFormat date}}</td>
@@ -23,7 +24,34 @@
                 {{/each}}
                 </tbody>
             </table>
+            </div>
 
         </article>
+        <div class="column">
+            <h3>Followers</h3>
+            <section class="ui raised segment">
+                <div class="ui grid">
+                    <table class="ui celled table segment">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Tweet</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody
+                        {{#each tweets}}
+                            <tr>
+                                <td>{{sender.firstName}} {{sender.lastName}}</td>
+                                <td> {{message}}</td>
+                                <td> {{dateFormat date}}</td>
+
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </div>
 </section>

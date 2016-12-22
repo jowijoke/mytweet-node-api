@@ -108,6 +108,8 @@ exports.viewSettings = {
   handler: function (request, reply) {
     var userEmail = request.auth.credentials.loggedInUser;
     User.findOne({ email: userEmail }).then(foundUser => {
+
+
       reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
     }).catch(err => {
       reply.redirect('/');
