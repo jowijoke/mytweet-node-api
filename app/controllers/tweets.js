@@ -147,11 +147,9 @@ exports.deleteAll = {
     var userEmail = request.auth.credentials.loggedInUser;
     User.findOne({ email: userEmail }).then(user => {
       Tweet.find({ sender: user }).remove('tweet').then(tweet => {
-        reply.view('home', {
-          title: 'Tweets to Date',
+        reply.redirect('/home');
         });
       });
-    });
   },
 };
 
