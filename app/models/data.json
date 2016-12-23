@@ -18,6 +18,12 @@
       "lastName": "Simpson",
       "email": "lisa@simpson.com",
       "password": "secret"
+    },
+    "bart": {
+      "firstName": "Bart",
+      "lastName": "Simpson",
+      "email": "bart@simpson.com",
+      "password": "secret"
     }
   },
 
@@ -46,6 +52,41 @@
       "message": "Where's Moe's",
       "date": "Wed Aug 10 2016 17:32:41 GMT+0100 (GMT Summer Time)",
       "sender": "->users.homer"
+    },
+    "four":{
+      "message": "I hate homework!!",
+      "date": "Thu Sep 12 2016 17:32:41 GMT+0100 (GMT Summer Time)",
+      "sender": "->users.bart"
+    },
+    "five": {
+      "message": "Don't have a cow man",
+      "date": "Mon Nov 10 2016 18:27:41 GMT+0100 (GMT Summer Time)",
+      "sender": "->users.bart"
+    },
+    "six": {
+      "message": "D'oh",
+      "date": "Wed Dec 10 2016 13:27:41 GMT+0100 (GMT Summer Time)",
+      "sender": "->users.homer"
+    }
+  },
+
+  "followers": {
+    "_model": "Follower",
+    "one": {
+      "follower": "->users.homer",
+      "following": "->users.lisa"
+    },
+    "two": {
+      "follower": "->users.homer",
+      "following": "->users.marge"
+    },
+    "three": {
+      "follower": "->users.marge",
+      "following": "->users.lisa"
+    },
+    "four": {
+      "follower": "->users.lisa",
+      "following": "->users.bart"
     }
   }
 }
