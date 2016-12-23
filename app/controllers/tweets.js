@@ -2,6 +2,8 @@
 const Tweet = require('../models/tweet');
 const User = require('../models/user');
 const Follower = require('../models/follower');
+const Handlebars = require('handlebars');
+const moment = require('moment');
 exports.home = {
 
   handler: (request, reply) => {
@@ -64,6 +66,10 @@ exports.tweet = {
       const tweet = new Tweet(data);
       tweet.sender = user._id;
       tweet.date = new Date();
+      if (data.picture.length) {
+        tweet.picture.data = data.picture;
+        tweet.picture.contentType = 'jpg';
+      }
       return tweet.save();
     }).then(userTweets => {
       reply.redirect('/home');
@@ -72,6 +78,29 @@ exports.tweet = {
     });
   },
 };
+
+exports.getImage = {
+
+  handler: function (request, reply) {
+    let tweetId = request.params.tweetId;
+
+    Tweet.findOne({ _id: tweetId }).exec((err, tweet) => {
+      if (tweet.picture) {
+        console.log(tweet.picture.data);
+        reply(tweet.picture.data).type('image');
+      }
+    });
+  },
+};
+
+//helper from handlebars that executes when 'exists' is used.
+Handlebars.registerHelper('exists', function (variable, options) {
+  if (typeof variable !== 'undefined') {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
 
 exports.public = {
 
@@ -126,8 +155,7 @@ exports.deleteAll = {
   },
 };
 
-var Handlebars = require('handlebars');
-const moment = require('moment');
+
 
 Handlebars.registerHelper('dateFormat', function (timestamp) {
   // Formatting the date using momentjs

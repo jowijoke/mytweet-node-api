@@ -1,9 +1,12 @@
-            <form action="/tweet" method=POST>
+            <form action="/tweet" enctype="multipart/form-data" method=POST>
                 <h3>What's on your mind</h3>
                     <div class="ui form segment">
                         <textarea placeholder="What's on your mind" name="message" maxlength="140">
                         </textarea>
                     </div>
+                <div class="ui field">
+                    <input id="content" type="file" name="picture"><!-- textarea placeholder="Add file" -->
+                </div>
                     <button class="ui blue submit button">Send</button>
             </form>
 
