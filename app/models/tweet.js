@@ -6,6 +6,7 @@ const tweetSchema = mongoose.Schema({
     ref: 'User',
   },
   message: String,
+  picture: { data: Buffer, contentType: String },
   date: Date,
 });
 
