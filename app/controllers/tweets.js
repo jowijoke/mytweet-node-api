@@ -1,7 +1,6 @@
 'use strict';
 const Tweet = require('../models/tweet');
 const User = require('../models/user');
-//const Friendship = require('mongoose').model('Followers');
 const Follower = require('../models/follower');
 exports.home = {
 

@@ -1,5 +1,5 @@
 /**
- * Created by User on 04/11/2016.
+ * Created by john on 04/11/2016.
  */
 
 'use strict';
@@ -7,6 +7,7 @@
 const User = require('../models/user');
 const Administrator = require('../models/administrator');
 const Tweet = require('../models/tweet');
+const Follower = require('../models/follower');
 
 exports.home = {
 
@@ -54,10 +55,12 @@ exports.removeUser = {
 
   handler: function (request, reply) {
     let userId = request.params.userId;
-    Tweet.find({ sender: userId }).remove('tweets').then(user => {
-      console.log('Removing user: ' + userId);
-      User.remove({ _id: userId }).then(admin => {
-        reply.redirect('/adminHome');
+    Follower.find({follower: userId}).remove('followers').then(tweet => {
+      Tweet.find({ sender: userId }).remove('tweets').then(user => {
+        console.log('Removing user: ' + userId);
+        User.remove({ _id: userId }).then(admin => {
+          reply.redirect('/adminHome');
+        });
       });
     });
   },
@@ -67,6 +70,7 @@ exports.removeAllUsers = {
 
   handler: function (request, reply) {
     console.log('Removing users');
+    Follower.find({}).remove('followers').then(tweet => {
     Tweet.find({}).remove('tweets').then(user => {
       User.find({}).populate('users').then(allUsers => {
         User.remove(allUsers).then(admin => {
@@ -74,6 +78,7 @@ exports.removeAllUsers = {
             title: 'adminpage',
           });
         });
+      });
       });
     });
   },
