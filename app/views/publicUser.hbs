@@ -17,7 +17,11 @@
                 <tbody>
                 {{#each tweets}}
                     <tr>
-                        <td> {{message}}</td>
+                        <td> {{message}}
+                            {{#if picture.data}}
+                                <img src="/getPicture/{{_id}}" height="52" width="52" />
+                            {{/if}}
+                        </td>
                         <td> {{dateFormat date}}</td>
                     </tr>
                 {{/each}}

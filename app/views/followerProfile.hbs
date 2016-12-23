@@ -18,7 +18,11 @@
                 <tbody>
                 {{#each followerTweets}}
                     <tr>
-                        <td> {{message}}</td>
+                        <td> {{message}}
+                            {{#if picture.data}}
+                                <img src="/getImage/{{_id}}" height="90" width="90" />
+                            {{/if}}
+                        </td>
                         <td> {{dateFormat date}}</td>
                     </tr>
                 {{/each}}

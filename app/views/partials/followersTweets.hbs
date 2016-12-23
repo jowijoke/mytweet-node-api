@@ -12,7 +12,11 @@
             {{#each tweets}}
                 <tr>
                     <td><a href="/followerProfile/{{sender._id}}">{{sender.firstName}} {{sender.lastName}}</a></td>
-                    <td> {{message}}</td>
+                    <td> {{message}}
+                        {{#exists picture.data}}
+                            <img src="/getImage/{{_id}}" height="52" width="52"/>
+                        {{/exists}}
+                    </td>
                     <td> {{dateFormat date}}</td>
                 </tr>
             {{/each}}
