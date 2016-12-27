@@ -21,7 +21,7 @@ exports.findTweets = {
   auth: 'jwt',
 
   handler: function (request, reply) {
-    Tweet.find({ _id: request.params.id }).then(tweets => {
+    Tweet.find({ user: request.params.id }).then(tweets => {
       reply(tweets);
     }).catch(err => {
       reply(Boom.badImplementation('error accessing db'));
@@ -70,6 +70,21 @@ exports.deleteTweets = {
       reply().code(204);
     }).catch(err => {
       reply(Boom.badImplementation('error removing Tweets'));
+    });
+  },
+};
+
+exports.deleteUserTweets = {
+
+  auth: 'jwt',
+
+  handler: function (request, reply) {
+    console.log(request.params.id);
+
+    Tweet.remove({ user: request.params.id }).then(err => {
+      reply().code(204);
+    }).catch(err => {
+      reply(Boom.badImplementation('error removing all Tweets from user'));
     });
   },
 };
