@@ -5,7 +5,7 @@ const Boom = require('boom');
 
 exports.findAllTweets = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     Tweet.find({}).populate('sender').then(tweets => {
@@ -18,10 +18,10 @@ exports.findAllTweets = {
 
 exports.findTweets = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
-    Tweet.find({ user: request.params.id }).then(tweets => {
+    Tweet.find({ sender: request.params.id }).populate('sender').then(tweets => {
       reply(tweets);
     }).catch(err => {
       reply(Boom.badImplementation('error accessing db'));
@@ -36,6 +36,8 @@ exports.makeTweet = {
 
     handler: function (request, reply) {
         const tweet = new Tweet(request.payload);
+        tweet.sender = request.params.id;
+        tweet.date = new Date();
         tweet.save().then(newTweet => {
             Tweet.findOne(newTweet).populate('sender').then(tweet => {
                 reply(tweet).code(201);
@@ -49,7 +51,7 @@ exports.makeTweet = {
 
 exports.deleteAllTweets = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     Tweet.remove({}).then(err => {
@@ -61,12 +63,13 @@ exports.deleteAllTweets = {
 
 };
 
-exports.deleteTweets = {
+exports.deleteTweet = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
-    Tweet.remove({ _id: request.params.id }).then(result => {
+    let tweetId = request.params.tweetId;
+    Tweet.remove({ _id: tweetId }).then(result => {
       reply().code(204);
     }).catch(err => {
       reply(Boom.badImplementation('error removing Tweets'));
@@ -74,17 +77,16 @@ exports.deleteTweets = {
   },
 };
 
-exports.deleteUserTweets = {
+exports.deleteTweets = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
-    console.log(request.params.id);
-
-    Tweet.remove({ user: request.params.id }).then(err => {
-      reply().code(204);
-    }).catch(err => {
-      reply(Boom.badImplementation('error removing all Tweets from user'));
-    });
+    const user = request.params.id;
+      Tweet.find({sender: user}).remove('tweet').then(err => {
+        reply().code(204);
+      }).catch(err => {
+        reply(Boom.badImplementation('error removing all User Tweets'));
+      });
   },
 };

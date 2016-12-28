@@ -11,10 +11,10 @@ module.exports = [
   { method: 'POST', path: '/api/users/authenticate', config: UsersApi.authenticate },
 
   { method: 'GET', path: '/api/tweets', config: TweetsApi.findAllTweets },
-  { method: 'GET', path: '/api/tweets/{id}', config: TweetsApi.findTweets },
-  { method: 'POST', path: '/api/tweets/{id}', config: TweetsApi.makeTweet },
-  { method: 'DELETE', path: '/api/tweets/{id}', config: TweetsApi.deleteTweets },
-  { method: 'DELETE', path: '/api/usertweets/{id}', config: TweetsApi.deleteUserTweets},
+  { method: 'GET', path: '/api/users/{id}/tweets', config: TweetsApi.findTweets },
+  { method: 'POST', path: '/api/users/{id}/tweets', config: TweetsApi.makeTweet },
+  { method: 'DELETE', path: '/api/users/{id}/tweets', config: TweetsApi.deleteTweets },
+  { method: 'DELETE', path: '/api/tweets/{tweetId}', config: TweetsApi.deleteTweet },
   { method: 'DELETE', path: '/api/tweets', config: TweetsApi.deleteAllTweets },
 
 

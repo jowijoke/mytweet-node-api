@@ -6,7 +6,7 @@ const utils = require('./utils.js');
 
 exports.find = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     User.find({}).exec().then(users => {
@@ -38,7 +38,7 @@ exports.authenticate = {
 
 exports.findOne = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     User.findOne({ _id: request.params.id }).then(user => {
@@ -56,7 +56,7 @@ exports.findOne = {
 
 exports.create = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     const user = new User(request.payload);
@@ -71,7 +71,7 @@ exports.create = {
 
 exports.deleteAll = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     User.remove({}).then(err => {
@@ -85,7 +85,7 @@ exports.deleteAll = {
 
 exports.deleteOne = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     User.remove({ _id: request.params.id }).then(user => {
