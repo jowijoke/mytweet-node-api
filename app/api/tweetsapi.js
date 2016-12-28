@@ -5,7 +5,7 @@ const Boom = require('boom');
 
 exports.findAllTweets = {
 
-  auth: false,
+  auth: 'jwt',
 
   handler: function (request, reply) {
     Tweet.find({}).populate('sender').then(tweets => {
@@ -18,7 +18,7 @@ exports.findAllTweets = {
 
 exports.findTweets = {
 
-  auth: false,
+  auth: 'jwt',
 
   handler: function (request, reply) {
     Tweet.find({ sender: request.params.id }).populate('sender').then(tweets => {
@@ -32,7 +32,7 @@ exports.findTweets = {
 
 exports.makeTweet = {
 
-    auth: false,
+    auth: 'jwt',
 
     handler: function (request, reply) {
         const tweet = new Tweet(request.payload);
@@ -51,7 +51,7 @@ exports.makeTweet = {
 
 exports.deleteAllTweets = {
 
-  auth: false,
+  auth: 'jwt',
 
   handler: function (request, reply) {
     Tweet.remove({}).then(err => {
@@ -65,7 +65,7 @@ exports.deleteAllTweets = {
 
 exports.deleteTweet = {
 
-  auth: false,
+  auth: 'jwt',
 
   handler: function (request, reply) {
     let tweetId = request.params.tweetId;
@@ -79,7 +79,7 @@ exports.deleteTweet = {
 
 exports.deleteTweets = {
 
-  auth: false,
+  auth: 'jwt',
 
   handler: function (request, reply) {
     const user = request.params.id;
