@@ -39,33 +39,33 @@
     "_model": "Tweet",
     "one": {
       "message": "Lisa for president!!",
-      "date": "Fri Sep 27 2016 15:43:41 GMT+0100 (GMT Summer Time)",
+      "date": "1402140001768.0",
       "sender": "->users.lisa"
 
     },
     "two": {
       "message": "I love my family",
-      "date": "Thu Oct 18 2016 14:55:41 GMT+0100 (GMT Summer Time)",
+      "date": "1402140002768.0",
       "sender": "->users.marge"
     },
     "three": {
       "message": "Where's Moe's",
-      "date": "Wed Aug 10 2016 17:32:41 GMT+0100 (GMT Summer Time)",
+      "date": "1402140003768.0",
       "sender": "->users.homer"
     },
     "four":{
       "message": "I hate homework!!",
-      "date": "Thu Sep 12 2016 17:32:41 GMT+0100 (GMT Summer Time)",
+      "date": "1402140004768.0",
       "sender": "->users.bart"
     },
     "five": {
       "message": "Don't have a cow man",
-      "date": "Mon Nov 10 2016 18:27:41 GMT+0100 (GMT Summer Time)",
+      "date": "1402140005768.0",
       "sender": "->users.bart"
     },
     "six": {
       "message": "D'oh",
-      "date": "Wed Dec 10 2016 13:27:41 GMT+0100 (GMT Summer Time)",
+      "date": "1402140006768.0",
       "sender": "->users.homer"
     }
   },

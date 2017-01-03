@@ -2,14 +2,16 @@
 
 const Tweet = require('../models/tweet');
 const Boom = require('boom');
+const utils = require('./utils.js');
 
 exports.findAllTweets = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     Tweet.find({}).populate('sender').then(tweets => {
-      reply(tweets);
+      console.log("sending back tweets");
+      reply(tweets).code(201);
     }).catch(err => {
       reply(Boom.badImplementation('error accessing db'));
     });
@@ -32,17 +34,19 @@ exports.findTweets = {
 
 exports.makeTweet = {
 
-    auth: 'jwt',
+    auth: {
+      strategy: 'jwt',
+    },
 
     handler: function (request, reply) {
         const tweet = new Tweet(request.payload);
-        tweet.sender = request.params.id;
+        tweet.sender = utils.getUserIdFromRequest(request);
         tweet.date = new Date();
         tweet.save().then(newTweet => {
-            Tweet.findOne(newTweet).populate('sender').then(tweet => {
+          return Tweet.findOne(newTweet).populate('sender');
+        }).then(tweet => {
                 reply(tweet).code(201);
-            });
-        }).catch(err => {
+            }).catch(err => {
             reply(Boom.badImplementation('error making tweet'));
         });
     },

@@ -65,7 +65,7 @@ exports.tweet = {
       let data = request.payload;
       const tweet = new Tweet(data);
       tweet.sender = user._id;
-      tweet.date = new Date();
+      tweet.date = new Number(new Date());
       if (data.picture.length) {
         tweet.picture.data = data.picture;
         tweet.picture.contentType = 'jpg';
@@ -74,7 +74,7 @@ exports.tweet = {
     }).then(userTweets => {
       reply.redirect('/home');
     }).catch(err => {
-      reply.redirect('/');
+      console.log(err);
     });
   },
 };

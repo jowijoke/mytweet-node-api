@@ -6,7 +6,7 @@ const utils = require('./utils.js');
 
 exports.find = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     User.find({}).exec().then(users => {
@@ -19,15 +19,19 @@ exports.find = {
 };
 
 exports.authenticate = {
-    auth: 'jwt',
+    auth: false,
     handler: function (request, reply) {
         const user = request.payload;
+        console.log("authuser:" + user);
         User.findOne({ email: user.email }).then(foundUser => {
+          console.log("foundUser " + foundUser);
             if (foundUser && foundUser.password === user.password) {
+              console.log("user success");
                 const token = utils.createToken(foundUser);
                 reply({ success: true, token: token }).code(201);
             } else {
-                reply({ success: false, message: 'Authentication failed. User not found.' }).code(201);
+              console.log("user failed");
+                reply({ success: false, message: 'Authentication failed. User not found.' }).code(500);
             }
         }).catch(err => {
             reply(Boom.notFound('internal db failure'));
@@ -38,7 +42,7 @@ exports.authenticate = {
 
 exports.findOne = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     User.findOne({ _id: request.params.id }).then(user => {
@@ -56,10 +60,11 @@ exports.findOne = {
 
 exports.create = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     const user = new User(request.payload);
+    console.log("create user: " + user);
     user.save().then(newUser => {
       reply(newUser).code(201);
     }).catch(err => {
@@ -71,7 +76,7 @@ exports.create = {
 
 exports.deleteAll = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     User.remove({}).then(err => {
@@ -85,7 +90,7 @@ exports.deleteAll = {
 
 exports.deleteOne = {
 
-  auth: 'jwt',
+  auth: false,
 
   handler: function (request, reply) {
     User.remove({ _id: request.params.id }).then(user => {
