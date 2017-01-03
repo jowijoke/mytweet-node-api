@@ -34,14 +34,12 @@ exports.findTweets = {
 
 exports.makeTweet = {
 
-    auth: {
-      strategy: 'jwt',
-    },
+    auth: 'jwt',
 
     handler: function (request, reply) {
         const tweet = new Tweet(request.payload);
         tweet.sender = utils.getUserIdFromRequest(request);
-        tweet.date = new Date();
+        tweet.date = new Number(new Date().getTime());
         tweet.save().then(newTweet => {
           return Tweet.findOne(newTweet).populate('sender');
         }).then(tweet => {

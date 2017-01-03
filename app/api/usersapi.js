@@ -28,7 +28,8 @@ exports.authenticate = {
             if (foundUser && foundUser.password === user.password) {
               console.log("user success");
                 const token = utils.createToken(foundUser);
-                reply({ success: true, token: token }).code(201);
+                reply({ success: true, token: token, user:foundUser }).code(201);
+                console.log("token " + token);
             } else {
               console.log("user failed");
                 reply({ success: false, message: 'Authentication failed. User not found.' }).code(500);
