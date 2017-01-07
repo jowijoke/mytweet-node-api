@@ -38,13 +38,16 @@ exports.makeTweet = {
 
     handler: function (request, reply) {
         const tweet = new Tweet(request.payload);
+        console.log("tweet is " + tweet);
         tweet.sender = utils.getUserIdFromRequest(request);
-        tweet.date = new Number(new Date().getTime());
+        tweet.date = new Number(new Date());
         tweet.save().then(newTweet => {
           return Tweet.findOne(newTweet).populate('sender');
         }).then(tweet => {
+          console.log("sending back newTweet" + tweet);
                 reply(tweet).code(201);
             }).catch(err => {
+          console.log("sending back newTweet failed" + err);
             reply(Boom.badImplementation('error making tweet'));
         });
     },
@@ -76,6 +79,23 @@ exports.deleteTweet = {
     }).catch(err => {
       reply(Boom.badImplementation('error removing Tweets'));
     });
+  },
+};
+
+exports.changeTweet = {
+
+  auth: 'jwt',
+
+  handler: function (request, reply) {
+    const tweetId = request.payload;
+    Tweet.findOne({ _id: tweetId }).then(foundTweet => {
+      foundTweet.message = tweetId.message;
+      return foundTweet.save();
+    }).then(result => {
+        reply(result).code(204);
+      }).catch(err => {
+        reply(Boom.badImplementation('error saving Tweets'));
+      });
   },
 };
 
