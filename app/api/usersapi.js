@@ -3,6 +3,8 @@
 const User = require('../models/user');
 const Boom = require('boom');
 const utils = require('./utils.js');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 exports.find = {
 

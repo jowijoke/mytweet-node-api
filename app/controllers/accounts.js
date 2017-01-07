@@ -4,6 +4,8 @@ const User = require('../models/user');
 const Administrator = require('../models/administrator');
 const Joi = require('joi');
 const Follower = require('../models/follower');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 exports.main = {
   auth: false,
@@ -27,10 +29,14 @@ exports.register = {
   validate: {
 
     payload: {
-      firstName: Joi.string().required(),
-      lastName: Joi.string().required(),
+      firstName: Joi.string().regex(/^[A-Z][a-z]{2,}$/),
+      lastName: Joi.string().regex(/^[A-Z]/).min(3),
       email: Joi.string().email().required(),
-      password: Joi.string().required(),
+      password: Joi.string().regex(/^[a-zA-Z0-9@*#]{8,15}$/),
+    },
+
+    options: {
+      abortEarly: false,
     },
 
     failAction: function (request, reply, source, error) {
@@ -45,12 +51,17 @@ exports.register = {
   handler: function (request, reply) {
     const user = new User(request.payload);
 
-    user.save().then(newUser => {
-      reply.redirect('/login');
-    }).catch(err => {
-      reply.redirect('/');
-    });
-  },
+    const plaintextPassword = user.password;
+
+    bcrypt.hash(plaintextPassword, saltRounds, function(err, hash) {
+      user.password = hash;
+      return user.save().then(newUser => {
+        reply.redirect('/login');
+      }).catch(err => {
+        reply.redirect('/');
+      });
+    })}
+
 };
 
 exports.login = {
@@ -87,21 +98,27 @@ exports.authenticate = {
 
   handler: function (request, reply) {
     const user = request.payload;
-    User.findOne({ email: user.email }).then(foundUser => {
-      if (foundUser && foundUser.password === user.password) {
-        request.cookieAuth.set({
-          loggedIn: true,
-          loggedInUser: user.email,
-        });
-        reply.redirect('/home');
-      } else {
-        reply.redirect('/signup');
-      }
-    }).catch(err => {
-      reply.redirect('/');
-    });
-  },
+    User.findOne({email: user.email}).then(foundUser => {
+      bcrypt.compare(user.password, foundUser.password, function (err, isValid) {
+        if (isValid) {
+          request.cookieAuth.set(
+              {
+                loggedIn: true,
+                loggedInUser: user.email,
+              });
+          reply.redirect('/home');
+        }
+        else
+        {
+          reply.redirect('/signup');
+        }
 
+      })
+    }).
+    catch(err => {
+      reply.redirect('/signup');
+    })
+  }
 };
 
 exports.viewSettings = {
@@ -157,8 +174,10 @@ exports.updateSettings = {
       user.firstName = editedUser.firstName;
       user.lastName = editedUser.lastName;
       user.email = editedUser.email;
-      user.password = editedUser.password;
-      return user.save();
+      bcrypt.hash(editedUser.password, saltRounds, function(err, hash) {
+        user.password = hash;
+        return user.save();
+      })
     }).then(user => {
       reply.view('settings', { title: 'Edit Account Settings', user: user });
     }).catch(err => {
@@ -201,19 +220,21 @@ exports.adminLogin = {
 
   handler: function (request, reply) {
     const admin = request.payload;
-
     Administrator.findOne({ email: admin.email }).then(foundAdmin => {
-      if (foundAdmin && foundAdmin.password === admin.password) {
-        request.cookieAuth.set({
-          loggedIn: true,
-          loggedInUser: admin.email,
-        });
-        console.log('Admin logged in');
-        reply.redirect('/adminHome');
-      } else {
-        console.log('Failed to login');
-        reply.redirect('/admin');
-      }
+      bcrypt.compare(admin.password, foundAdmin.password, function (err, isValid) {
+        if (isValid) {
+          request.cookieAuth.set(
+              {
+                loggedIn: true,
+                loggedInUser: admin.email,
+              });
+          reply.redirect('/adminHome');
+        }
+        else
+        {
+          reply.redirect('/admin');
+        }
+      })
     }).catch(err => {
       console.log('Fail to login');
       reply.redirect('/admin');
