@@ -73,9 +73,12 @@ exports.deleteTweet = {
   auth: 'jwt',
 
   handler: function (request, reply) {
-    let tweetId = request.params.tweetId;
-    Tweet.remove({ _id: tweetId }).then(result => {
-      reply().code(204);
+    let tweetId = request.payload;
+    console.log("tweet Id is " + tweetId);
+    Tweet.findOne({ _id: tweetId }).then(foundTweet => {
+      return foundTweet.remove();
+    }).then(result => {
+      reply(result).code(204);
     }).catch(err => {
       reply(Boom.badImplementation('error removing Tweets'));
     });
