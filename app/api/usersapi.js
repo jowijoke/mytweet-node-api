@@ -26,16 +26,18 @@ exports.authenticate = {
         const user = request.payload;
         console.log("authuser:" + user);
         User.findOne({ email: user.email }).then(foundUser => {
-          console.log("foundUser " + foundUser);
-            if (foundUser && foundUser.password === user.password) {
+          bcrypt.compare(user.password, foundUser.password, function (err, isValid) {
+            if (isValid) {
+              console.log("foundUser " + foundUser);
               console.log("user success");
-                const token = utils.createToken(foundUser);
-                reply({ success: true, token: token, user:foundUser }).code(201);
-                console.log("token " + token);
+              const token = utils.createToken(foundUser);
+              reply({success: true, token: token, user: foundUser}).code(201);
+              console.log("token " + token);
             } else {
               console.log("user failed");
-                reply({ success: false, message: 'Authentication failed. User not found.' }).code(500);
+              reply({success: false, message: 'Authentication failed. User not found.'}).code(500);
             }
+          })
         }).catch(err => {
             reply(Boom.notFound('internal db failure'));
         });
@@ -67,12 +69,18 @@ exports.create = {
 
   handler: function (request, reply) {
     const user = new User(request.payload);
-    console.log("create user: " + user);
-    user.save().then(newUser => {
-      reply(newUser).code(201);
-    }).catch(err => {
-      reply(Boom.badImplementation('error creating User'));
-    });
+
+    const plaintextPassword = user.password;
+
+    bcrypt.hash(plaintextPassword, saltRounds, function(err, hash) {
+      user.password = hash;
+      console.log("create user: " + user);
+      user.save().then(newUser => {
+        reply(newUser).code(201);
+      }).catch(err => {
+        reply(Boom.badImplementation('error creating User'));
+      });
+    })
   },
 
 };
