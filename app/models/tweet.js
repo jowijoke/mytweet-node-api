@@ -7,7 +7,7 @@ const tweetSchema = mongoose.Schema({
   },
   message: String,
   picture: { data: Buffer, contentType: String },
-  date: Date,
+  date:  {type: Number, default: (new Date()).getTime(),}
 });
 
 const Tweet = mongoose.model('Tweet', tweetSchema);

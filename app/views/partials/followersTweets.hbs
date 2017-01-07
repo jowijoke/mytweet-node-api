@@ -17,7 +17,7 @@
                             <img src="/getImage/{{_id}}" height="52" width="52"/>
                         {{/exists}}
                     </td>
-                    <td> {{dateFormat date}}</td>
+                    <td> <div class="date"><script>document.write(new Date({{date}}).toGMTString())</script></div> </td>
                 </tr>
             {{/each}}
             </tbody>
