@@ -5,25 +5,25 @@
       "firstName": "Homer",
       "lastName": "Simpson",
       "email": "homer@simpson.com",
-      "password": "secret"
+      "password": "$2a$10$.KtKYH04QhbJ4674w8mxV.QF79u75Cm3PaeX1DKrh90eVDDiW6Jwe"
     },
     "marge": {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
-      "password": "secret"
+      "password": "$2a$10$.KtKYH04QhbJ4674w8mxV.QF79u75Cm3PaeX1DKrh90eVDDiW6Jwe"
     },
     "lisa": {
       "firstName": "Lisa",
       "lastName": "Simpson",
       "email": "lisa@simpson.com",
-      "password": "secret"
+      "password": "$2a$10$.KtKYH04QhbJ4674w8mxV.QF79u75Cm3PaeX1DKrh90eVDDiW6Jwe"
     },
     "bart": {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
-      "password": "secret"
+      "password": "$2a$10$.KtKYH04QhbJ4674w8mxV.QF79u75Cm3PaeX1DKrh90eVDDiW6Jwe"
     }
   },
 
@@ -31,7 +31,7 @@
     "_model": "Administrator",
     "Administrator": {
       "email": "admin@wit.com",
-      "password": "secret"
+      "password": "$2a$10$.KtKYH04QhbJ4674w8mxV.QF79u75Cm3PaeX1DKrh90eVDDiW6Jwe"
     }
   },
 
